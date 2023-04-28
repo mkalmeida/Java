@@ -1,9 +1,0 @@
-Exercícios de Classes, Objetos e Métodos
-
-1) Crie a Classe Cliente e defina pelo menos 5 Atributos relevantes ao Objeto Cliente, a sua escolha;
-2) Lembre-se de escolher Atributos genéricos, que descrevam as características gerais de qualquer Cliente;
-3) Crie o Método Construtor com parâmetros, contendo todos os Atributos definidos na Classe Cliente nos argumentos do Método;
-4) Crie os Métodos Get e Set para todos os Atributos da Classe Cliente;
-5) Crie o Método visualizar(), com a função de listar todos os Atributos de um Objeto da Classe Cliente;
-6) Crie a Classe TestaCliente no mesmo pacote da Classe Cliente, contendo o Método main() e instancie 2 Objetos da Classe Cliente;
-7) Utilize o Método visualizar() para exibir os dados dos 2 Objetos Instanciados.
