@@ -13,14 +13,16 @@ public class ExibirVariaveis {
 		boolean resposta = true;
 		String palavra = "Afro Tech Pretas";
 		
-		System.out.println(bit);
-		System.out.println(quantidade);
-		System.out.println(identificador);
-		System.out.println(altura);
-		System.out.println(area);
-		System.out.println(tipo);
-		System.out.println(resposta);
-		System.out.println(palavra);
+//		System.out.println(bit);
+//		System.out.println(quantidade);
+//		System.out.println(identificador);
+//		System.out.println(altura);
+//		System.out.println(area);
+//		System.out.println(tipo);
+//		System.out.println(resposta);
+		System.out.println(palavra.indexOf(" "));
+		
+		
 		
 	}
 
