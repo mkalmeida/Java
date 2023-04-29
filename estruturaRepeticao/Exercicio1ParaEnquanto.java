@@ -1,6 +1,5 @@
-/*Obtenha um número digitado pelo usuário e repita a operação de multiplicar 
- * ele por três  (imprimindo o novo valor) até que ele seja maior do que 100. 
- * Ex.: se o usuário digita 5,  deveremos observar na tela a seguinte sequência: 5 15 45 135.*/
+/*Faça um programa que mostre uma contagem na tela de 233 a 456, só que contando
+de 3 em 3 quando estiver entre 300 e 400 e de 5 em 5 quando não estiver*/
 
 package estruturaRepeticao;
 
