@@ -12,6 +12,7 @@ public class ContaEstudantil extends Conta {
 		this.limiteEstudantil = limiteEstudantil;
 		
 		System.out.println("CONTA ESTUDANTIL");
+		System.out.println("Saldo atual: R$ " + getSaldo());
 	}
 	
 	public double usarLimiteEstudantil(double valor) {

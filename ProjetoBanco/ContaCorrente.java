@@ -13,6 +13,7 @@ Scanner input = new Scanner(System.in);
 		super(numero, cpf, saldo, ativo);
 		
 		System.out.println("CONTA CORRENTE");
+		System.out.println("Saldo atual: R$ " + getSaldo());
 	}
 	
 	public void pedirTalao () {

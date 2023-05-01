@@ -277,7 +277,6 @@ public class TesteConta {
 					return true;
 					}
 				case 5:
-					System.out.println("CONTA ESTUDANTIL");
 					ContaEstudantil CEstudantil = new ContaEstudantil(15423, "321.432.543-05", 50.00, true, 5000);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");

@@ -12,6 +12,7 @@ public class ContaEspecial extends Conta {
 		this.limite = limite;
 		
 		System.out.println("CONTA ESPECIAL");
+		System.out.println("Saldo atual: R$ " + getSaldo());
 		
 	}
 	

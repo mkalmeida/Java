@@ -10,6 +10,7 @@ public class ContaEmpresa extends Conta {
 		super(numero, cpf, saldo, ativo);
 		
 		System.out.println("CONTA EMPRESA");
+		System.out.println("Saldo atual: R$ " + getSaldo());
 	}
 	
 	//Empréstimo funcionando, mas o limite printa 2x
