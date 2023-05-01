@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 public class Conta {
 	
-	protected int numero, movimentos=0, opcao=0;
+	protected int numero, movimentos=0, opcao=0, diaAniversarioPoupanca;
 	protected String cpf;
-	protected double saldo=1, valor;
+	protected double saldo=0, valor=0;
 	boolean ativo, validaDebito = false, validaCredito = false;
 	
 	Scanner input = new Scanner(System.in);
@@ -17,8 +17,17 @@ public class Conta {
 		this.saldo = saldo;
 		this.ativo = ativo;
 	}
+	
+	
+	public int login(int diaAniversarioPoupanca) {
+		System.out.println("NUMERO DA CONTA: " + numero);
+		System.out.println("CPF: " + cpf);
+		System.out.println("DIA: " + diaAniversarioPoupanca);
+		System.out.println("--------------------------------------------------------");
+		return diaAniversarioPoupanca;
+	}
 
-	public int getNumero() {
+		public int getNumero() {
 		return numero;
 	}
 
@@ -46,21 +55,27 @@ public class Conta {
 		return saldo;
 	}
 	
+	public int getDiaAniversarioPoupanca() {
+		return diaAniversarioPoupanca;
+	}
+
+
+	public void setDiaAniversarioPoupanca(int diaAniversarioPoupanca) {
+		this.diaAniversarioPoupanca = diaAniversarioPoupanca;
+	}
+	
 	/*Para crédito e débito são solicitadas as opções e caso o saldo seja insuficiente de acordo com a validação  o cliente pode
 	 * escolher entre sair ou digitar novamente o valor */
-	public boolean credito() {
+	public double credito(double valor) {
 		
 		while (validaCredito == false ) {
-			System.out.println("DIGITE O VALOR A SER CREDITADO:");
-			valor = input.nextDouble();
 			if (valor > 0) {
-				saldo = saldo + valor;
-				System.out.println("O NOVO SALDO É : R$ " + saldo);
 				validaCredito = true;
 				movimentos ++;
 			} else {
-				System.out.println("VALOR INSUFICIENTE PARA SAQUE");
+				System.out.println("NÃO É PERMITIDO CRÉDITO DE r$ 0,00 REAIS");
 				System.out.println("DIGITE 1 PARA SAIR OU 2 PARA DIGITAR O VALOR NOVAMENTE\n");
+				saldo = valor + this.saldo;
 				opcao = input.nextInt();
 				switch (opcao) {
 				case 1:
@@ -78,13 +93,12 @@ public class Conta {
 
 			}
 		}
-		return false;
+		return saldo;
+
 	}
 	
-	public boolean debito () {
+	public double debito (double valor) {
 		while (validaDebito == false ) {
-			System.out.println("DIGITE O VALOR A SER DEBITADO:");
-			valor = input.nextInt();
 			if (saldo == 0 || saldo < valor) {
 				System.out.println("NÃO É POSSÍVEL REALIZAR A OPERAÇÃO" + "\n" + "SALDO INSUFICIENTE"+ "\n" + "DIGITE 1 PARA SAIR OU 2 PARA DIGITAR O VALOR NOVAMENTE\n");
 				opcao = input.nextInt();
@@ -101,14 +115,10 @@ public class Conta {
 					}
 				}
 					} else {
-						saldo = saldo - valor;
-						System.out.println("O NOVO SALDO É: R$ " + saldo);
 						validaDebito = true;
-						movimentos ++;
 					}
 			}
-		return false;
+		return saldo;
 	}
-	
-}
-		
+
+	}
