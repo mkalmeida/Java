@@ -9,18 +9,18 @@ Scanner input = new Scanner(System.in);
 	int qtdTalaoRestante=0, pedirTalao, qtdTalao=3;
 	
 	
-	public ContaCorrente(int numero, String cpf, double saldo, boolean ativo) {
-		super(numero, cpf, saldo, ativo);
+	public ContaCorrente(int numero, String cpf, double saldo, boolean ativo, int diaAniversarioPoupanca) {
+		super(numero, cpf, saldo, ativo, diaAniversarioPoupanca);
 		
 		System.out.println("CONTA CORRENTE");
-		System.out.println("Saldo atual: R$ " + getSaldo());
+
 	}
 	
 	public void pedirTalao () {
 
 		}
 	
-@Override
+
 public double credito(double valor) {
 	
 	while (validaCredito == false ) {
@@ -62,7 +62,7 @@ public double debito (double valor) {
 				System.exit(0);
 			default:
 				if(opcao==2) {
-				validaCredito = false;
+					validaDebito = false;
 				} else {
 					System.out.println("OPÇÃO INVÁLIDA\n");
 				}

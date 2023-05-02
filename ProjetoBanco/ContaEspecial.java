@@ -7,12 +7,12 @@ public class ContaEspecial extends Conta {
 	boolean ativo, validaDebito = false, validaCredito = false;	
 	double limite;
 
-	public ContaEspecial(int numero, String cpf, double saldo, boolean ativo, double limite) {
-		super(numero, cpf, saldo, ativo);
+	public ContaEspecial(int numero, String cpf, double saldo, boolean ativo, int diaAniversarioPoupanca, double limite) {
+		super(numero, cpf, saldo, ativo, diaAniversarioPoupanca);
 		this.limite = limite;
 		
 		System.out.println("CONTA ESPECIAL");
-		System.out.println("Saldo atual: R$ " + getSaldo());
+
 		
 	}
 	
@@ -20,14 +20,12 @@ public class ContaEspecial extends Conta {
 		if(saldo <= 0){
 			limite = this.limite - valor;
 			saldo = getSaldo() + valor;
-			System.out.println("LIMITE RESTANTE: R$ " + limite);
 		}
 		return saldo;
 	}
 	
-@Override
+
 public double credito(double valor) {
-	
 	while (validaCredito == false ) {
 		if (valor > 0) {
 			saldo = getSaldo() + valor;
@@ -56,26 +54,18 @@ public double credito(double valor) {
 	return saldo;
 
 }
+
 public double debito (double valor) {
 	while (validaDebito == false ) {
-		if (saldo == 0 || saldo < valor) {
-			System.out.println("NÃO É POSSÍVEL REALIZAR A OPERAÇÃO" + "\n" + "SALDO INSUFICIENTE"+ "\n" + "DIGITE 1 PARA SAIR OU 2 PARA DIGITAR O VALOR NOVAMENTE\n");
-			opcao = input.nextInt();
-			switch (opcao) {
-			case 1:
-				System.out.println("VOCÊ DIGITOU SAIR");
-				System.out.println("VOLTE SEMPRE!" +"\n"+ "RiVER BANK - O BANCO QUE TE DESAFOGA");
-				System.exit(0);
-			default:
-				if(opcao==2) {
-				validaCredito = false;
-				} else {
-					System.out.println("OPÇÃO INVÁLIDA\n");
-				}
+		saldo = getSaldo();
+		if (saldo < 0) {
+			limite = this.limite - valor;
+			saldo = getSaldo() + valor;
+			validaDebito = true;
+		} else {
+				saldo = getSaldo();
+				validaDebito = true;
 			}
-				} else {
-					validaDebito = true;
-				}
 		}
 	return saldo;
 }

@@ -10,18 +10,16 @@ public class ContaPoupanca extends Conta {
 	
 	Scanner input = new Scanner(System.in);
 	
-		
-	public ContaPoupanca(int numero, String cpf, double saldo, boolean ativo) {
-		super(numero, cpf, saldo, ativo);
-		
+	public ContaPoupanca(int numero, String cpf, double saldo, boolean ativo, int diaAniversarioPoupanca) {
+		super(numero, cpf, saldo, ativo, diaAniversarioPoupanca);
+
+
 		System.out.println("CONTA POUPANÇA");
 	}
 	
 	
-	
-	public double ajusteAniversario (int diaAniversarioPoupanca) {
-		diaAniversarioPoupanca = getDiaAniversarioPoupanca();
-		if ( diaAniversarioPoupanca == 5) {
+	public void ajusteAniversario () {
+		if (diaAniversarioPoupanca == 5) {
 		saldoAtual = getSaldo()+ (getSaldo()*0.05);
 		rendimentos = (getSaldo()*0.05);
 		System.out.println("Saldo atual: R$ " + saldoAtual);
@@ -30,12 +28,14 @@ public class ContaPoupanca extends Conta {
 		} else {
 			System.out.println("Saldo atual: R$ " + getSaldo());
 		}
-		return rendimentos;
+	}
+
+	public int diaAniversarioPoupanca(){
+		System.out.println("poup:" + this.diaAniversarioPoupanca);
+		return super.diaAniversarioPoupanca;
 	}
 
 
-
-	@Override
 	public double credito(double valor) {
 		
 		while (validaCredito == false ) {
@@ -65,6 +65,7 @@ public class ContaPoupanca extends Conta {
 		return saldo;
 
 	}
+	
 	public double debito (double valor) {
 		while (validaDebito == false ) {
 			saldo = getSaldo();
@@ -78,7 +79,7 @@ public class ContaPoupanca extends Conta {
 					System.exit(0);
 				default:
 					if(opcao==2) {
-					validaCredito = false;
+					validaDebito = false;
 					} else {
 						System.out.println("OPÇÃO INVÁLIDA\n");
 					}

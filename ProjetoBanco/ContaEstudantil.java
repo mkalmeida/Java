@@ -7,20 +7,20 @@ public class ContaEstudantil extends Conta {
 	boolean ativo, validaDebito = false, validaCredito = false;	
 	double limiteEstudantil;
 	
-	public ContaEstudantil(int numero, String cpf, double saldo, boolean ativo, double limiteEstudantil) {
-		super(numero, cpf, saldo, ativo);
+	public ContaEstudantil(int numero, String cpf, double saldo, boolean ativo, int diaAniversarioPoupanca, double limiteEstudantil) {
+		super(numero, cpf, saldo, ativo, diaAniversarioPoupanca);
 		this.limiteEstudantil = limiteEstudantil;
 		
 		System.out.println("CONTA ESTUDANTIL");
-		System.out.println("Saldo atual: R$ " + getSaldo());
+
 	}
 	
 	public double usarLimiteEstudantil(double valor) {
 		limiteEstudantil = 5000 - valor;
 		saldo = getSaldo() + valor;
-		System.out.println("SEU LIMITE ESTUDANTIL RESTANTE É DE R$:" +limiteEstudantil);
 		return saldo;
 	}
+	
 	public double credito(double valor) {
 		
 		while (validaCredito == false ) {
@@ -66,7 +66,7 @@ public class ContaEstudantil extends Conta {
 					System.exit(0);
 				default:
 					if(opcao==2) {
-					validaCredito = false;
+						validaDebito = false;
 					} else {
 						System.out.println("OPÇÃO INVÁLIDA\n");
 					}

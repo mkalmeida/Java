@@ -6,18 +6,17 @@ public class ContaEmpresa extends Conta {
 	protected double saldo=0, valor=0, limiteEmprestimo=0;
 	boolean ativo, validaDebito = false, validaCredito = false, validaEmprestimo = false;
 
-	public ContaEmpresa(int numero, String cpf, double saldo, boolean ativo) {
-		super(numero, cpf, saldo, ativo);
+	public ContaEmpresa(int numero, String cpf, double saldo, boolean ativo,int diaAniversarioPoupanca) {
+		super(numero, cpf, saldo, ativo, diaAniversarioPoupanca);
 		
 		System.out.println("CONTA EMPRESA");
-		System.out.println("Saldo atual: R$ " + getSaldo());
+
 	}
 	
-	//Empréstimo funcionando, mas o limite printa 2x
-	public double emprestimoEmpresa (double valor, double limiteEmprestimo) {
+	
+	public double emprestimoEmpresa (double valor) {
 		limiteEmprestimo = 10000 - valor;
 		saldo = getSaldo() + valor;
-		System.out.println("SEU LIMITE DE RESTANTE EMPRESTIMO É DE: R$" +limiteEmprestimo);
 		return saldo;
 		
 	}
@@ -69,7 +68,7 @@ public double credito(double valor) {
 					System.exit(0);
 				default:
 					if(opcao==2) {
-					validaCredito = false;
+						validaDebito = false;
 					} else {
 						System.out.println("OPÇÃO INVÁLIDA\n");
 					}

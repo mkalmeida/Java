@@ -21,16 +21,16 @@ public class TesteConta {
 		 cpf = input.next();
 		 System.out.println("DIA: ");
 		 diaAniversarioPoupanca = input.nextInt();
+		
 		 
-		 Conta c1 = new Conta(numero, cpf, 50.00, true);
+		 Conta c1 = new Conta(numero, cpf, 50.00, true, diaAniversarioPoupanca);
 		 
 		 
 		System.out.println("========================================================");
 		System.out.println("BOAS VINDAS AO BANCO RIVER BANK: O BANCO QUE TE DESAFOGA");
 		System.out.println("========================================================");
-		
-		diaAniversarioPoupanca = c1.login(diaAniversarioPoupanca);
-		
+	
+		c1.login();
 		
 			 
 		 while (validaOpcao == false) {
@@ -44,34 +44,33 @@ public class TesteConta {
 		
 		}		
 
-	int movimentos = 0, dia =0, teste=0,diaAniversarioPoupanca;
-	static int qtdTalao=0;
-	static int opcao, qtdTalaoLoop=0;
+	int movimentos = 0,diaAniversarioPoupanca, numero;
+	static int qtdTalao=0, opcao, qtdTalaoLoop=0;
 	int movimentacao=0, opcaoMovimentacao=0;
-	static double saldo, limiteLoop=0, limiteEmprestimoLoop=0, saldoPoupanca=0;
-	double novosaldo, saldoCC;
-	static double valor = 0, rendimentos;
+	static double saldo, limiteLoop=0, valor = 0, rendimentos , saldoLoop, valorLoop = 0;
+	double limiteEmprestimo, limiteEstudantil, limiteEspecial;
 	boolean validaOpcao = false; 
-	static boolean validaContinua=false;
+	static boolean validaContinua=false,ativo =false;
 	static char cont=0;
-	static double saldoLoop, valorLoop = 0;
+	String cpf;
 
 		
 		 Scanner input = new Scanner(System.in);
 		 static Scanner scan = new Scanner(System.in);
 		 static TesteConta menu = new TesteConta();
 
+
 		 // menu de contas 
 			public boolean opcoes (int opcao) {
 				switch (opcao) {
-				
 				case 1:
 					//Não consegui fazer com que o dia digitado no main fosse recebido por esse case para fazer o cálculo do rendimento
-					ContaPoupanca CPoupanca = new ContaPoupanca(15423, "321.432.543-05", 50.00, true);
+					ContaPoupanca CPoupanca = new ContaPoupanca(15423, "321.432.543-05", 50.00, true, diaAniversarioPoupanca);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");
 					movimentacao = input.nextInt();
-					rendimentos = CPoupanca.ajusteAniversario(CPoupanca.getDiaAniversarioPoupanca());
+					CPoupanca.ajusteAniversario();
+					rendimentos = CPoupanca.rendimentos;
 					while(validaOpcao == false) {
 					switch (movimentacao) {
 						case 1:
@@ -79,7 +78,7 @@ public class TesteConta {
 							System.out.println("1-CREDITO" + "\n" + "2-DEBITO");
 							opcaoMovimentacao = input.nextInt();
 							while(validaOpcao == false) {
-								switch (opcao) {
+								switch (opcaoMovimentacao) {
 								case 1:
 									System.out.println("DIGITE O VALOR A SER CREDITADO:");
 									valor = input.nextDouble();
@@ -87,17 +86,17 @@ public class TesteConta {
 									saldoLoop = saldoLoop + valor + rendimentos;
 									saldo = CPoupanca.credito(valor) + saldoLoop;
 									System.out.println("NOVO SALDO R$ " + saldo);
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
 								case 2:
-									//Esse case deixou de funcionar
 									System.out.println("DIGITE O VALOR A SER DEBITADO:");
 									valor = input.nextDouble();
 									CPoupanca.debito(valor);
 									saldo = CPoupanca.getSaldo() + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo );
-									saldoLoop = saldo;
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -113,8 +112,7 @@ public class TesteConta {
 				}
 					return true;
 				case 2: 
-					// CONTA CORRENTE FUNCIONANDO
-					ContaCorrente CCorrente = new ContaCorrente(15423, "321.432.543-05", 50.00, true);
+					ContaCorrente CCorrente = new ContaCorrente(15423, "321.432.543-05", 50.00, true, diaAniversarioPoupanca);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");
 					movimentacao = input.nextInt();
@@ -131,9 +129,10 @@ public class TesteConta {
 									System.out.println("DIGITE O VALOR A SER CREDITADO:");
 									valor = input.nextDouble();
 									CCorrente.credito(valor);
-									saldoLoop = saldoLoop + valor;
+									saldoLoop = saldoLoop + valor + rendimentos;
 									saldo = CCorrente.credito(valor) + saldoLoop;
 									System.out.println("NOVO SALDO R$ " + saldo);
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -143,7 +142,7 @@ public class TesteConta {
 									CCorrente.debito(valor);
 									saldo = CCorrente.getSaldo() + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo );
-									saldoLoop = saldo;
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -156,6 +155,7 @@ public class TesteConta {
 										System.out.println("VOCÊ SOLICITOU 1 TALÃO COM SUCESSO!");
 										qtdTalaoLoop = 3 - qtdTalaoLoop;
 										saldo = saldo - 30;
+										saldoLoop = saldo - 50;
 										System.out.println("NOVO SALDO R$ " + saldo);
 										}
 									movimentos ++;
@@ -173,11 +173,10 @@ public class TesteConta {
 					return true;
 					}
 				case 3:
-					ContaEspecial CEspecial = new ContaEspecial(15423, "321.432.543-05", 50.00, true, 1000.0);
+					ContaEspecial CEspecial = new ContaEspecial(15423, "321.432.543-05", 50.00, true, diaAniversarioPoupanca, 1000.0);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");
 					movimentacao = input.nextInt();
-					
 					while(validaOpcao == false) {
 					switch (movimentacao) {
 						case 1:
@@ -193,17 +192,27 @@ public class TesteConta {
 									saldoLoop = saldoLoop + valor;
 									saldo = CEspecial.credito(valor) + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo);
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
 								case 2:
 									System.out.println("DIGITE O VALOR A SER DEBITADO:");
-									valor = input.nextInt();
+									valor = input.nextDouble();
 									CEspecial.debito(valor);
-									saldo = CEspecial.usarLimite(valor);
 									saldoLoop = saldoLoop + valor;
-									saldo = CEspecial.debito(valor) + limiteLoop - valorLoop;
-									System.out.println("NOVO SALDO R$ " + saldo );
+									saldo = CEspecial.getSaldo() + saldoLoop - valor -valor;
+									System.out.println("SALDO R$ " + saldo );
+									saldoLoop = saldo - 50;
+									if (saldo<0) {
+									limiteEspecial = 1000 + saldo;
+									System.out.println("O SEU LIMITE DE EMPRESTIMO RESTANTE É R$ " + limiteEspecial );
+									saldoLoop = saldoLoop + valor;
+									saldo = 1000-limiteEspecial;
+									System.out.println("SALDO APÓS O USO DO LIMITE R$: " + saldo);
+									saldoLoop = saldo - 50;
+									valorLoop = valor;
+									}
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -220,8 +229,7 @@ public class TesteConta {
 					}
 					
 				case 4: 
-					// sucessivas solitações de crédito retornam os valores corretos. Se solicitar 1 dédito após as solicitações de crédito funciona, mas depois disso começa a trazer valores errados
-					ContaEmpresa CEmpresa = new ContaEmpresa (15423, "321.432.543-05", 50.00, true);
+					ContaEmpresa CEmpresa = new ContaEmpresa (15423, "321.432.543-05", 50.00, true, diaAniversarioPoupanca);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");
 					movimentacao = input.nextInt();
@@ -240,6 +248,7 @@ public class TesteConta {
 									saldoLoop = saldoLoop + valor;
 									saldo = CEmpresa.credito(valor) + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo);
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -247,21 +256,23 @@ public class TesteConta {
 									System.out.println("DIGITE O VALOR A SER DEBITADO:");
 									valor = input.nextDouble();
 									CEmpresa.debito(valor);
-									saldoLoop = saldoLoop - valorLoop;
-									saldo = CEmpresa.getSaldo() + saldoLoop - valor ;
+									saldo = CEmpresa.getSaldo() + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo );
-									saldoLoop = saldo;
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
 								case 3:
-									//Empréstimo funcionando, mas o limite printa 2x
 									System.out.println("DIGITE O VALOR DO EMPRESTIMO: ");
-									valor = input.nextInt();
-									CEmpresa.emprestimoEmpresa(valor, 10000);
+									valor = input.nextDouble();
+									CEmpresa.emprestimoEmpresa(valor);
 									saldoLoop = saldoLoop + valor;
-									saldo = CEmpresa.emprestimoEmpresa(valor, 10000) + saldoLoop - valor;;
+									saldo = CEmpresa.emprestimoEmpresa(valor) + saldoLoop - valor;;
 									System.out.println("NOVO SALDO R$ " + saldo );
+									saldoLoop = saldo - 50;
+									limiteEmprestimo = 10000 - valorLoop - valor;
+									System.out.println("O SEU LIMITE DE EMPRESTIMO RESTANTE É R$ " + limiteEmprestimo );
+									valorLoop = valor;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -277,7 +288,7 @@ public class TesteConta {
 					return true;
 					}
 				case 5:
-					ContaEstudantil CEstudantil = new ContaEstudantil(15423, "321.432.543-05", 50.00, true, 5000);
+					ContaEstudantil CEstudantil = new ContaEstudantil(15423, "321.432.543-05", 50.00, true, diaAniversarioPoupanca, 5000);
 					System.out.println("DESEJA FAZER MOVIMENTAÇÃO NESTA CONTA?");
 					System.out.println("DIGITE 1 PARA SIM E 2 PARA NÃO");
 					movimentacao = input.nextInt();
@@ -293,10 +304,11 @@ public class TesteConta {
 								case 1:
 									System.out.println("DIGITE O VALOR A SER CREDITADO:");
 									valor = input.nextDouble();
-									saldo = CEstudantil.credito(valor);
+									CEstudantil.credito(valor);
 									saldoLoop = saldoLoop + valor;
 									saldo = CEstudantil.credito(valor) + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo);
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -304,20 +316,23 @@ public class TesteConta {
 									System.out.println("DIGITE O VALOR A SER DEBITADO:");
 									valor = input.nextDouble();
 									CEstudantil.debito(valor);
-									saldo = CEstudantil.getSaldo();
-									saldoLoop = saldoLoop + valor;
-									saldo = CEstudantil.debito(valor) - saldoLoop;
+									saldo = CEstudantil.getSaldo() + saldoLoop - valor;
 									System.out.println("NOVO SALDO R$ " + saldo );
+									saldoLoop = saldo - 50;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
 								case 3:
-									System.out.println("DIGITE O VALOR DO EMPRESTIMO: ");
+									System.out.println("DIGITE O VALOR DO LIMITE QUE DESEJA USAR: ");
 									valor = input.nextInt();
 									CEstudantil.usarLimiteEstudantil(valor);
 									saldoLoop = saldoLoop + valor;
 									saldo = CEstudantil.usarLimiteEstudantil(valor) + saldoLoop - valor;;
 									System.out.println("NOVO SALDO R$ " + saldo );
+									saldoLoop = saldo - 50;
+									limiteEstudantil = 10000 - valorLoop - valor;
+									System.out.println("O SEU LIMITE RESTANTE É R$ " + limiteEstudantil );
+									valorLoop = valor;
 									movimentos ++;
 									TesteConta.continua();
 									return true;
@@ -348,16 +363,17 @@ public class TesteConta {
 				switch (cont) {
 					case 'S':
 						while (validaContinua == false) {
-							System.out.println("====================================");
+							System.out.println("========================================================");
 							System.out.println("BOAS VINDAS AO BANCO RIVER BANK: O BANCO QUE TE DESAFOGA");
-							System.out.println("==============================================");
+							System.out.println("========================================================");
 							System.out.println("DIGITE A OPÇÃO DESEJADA:");
 							System.out.println("1-CONTA POUPANÇA" + "\n" + "2-CONTA CORRENTE" + "\n" + "3-CONTA ESPECIAL" + "\n" + "4-CONTA EMPRESA" + "\n" + "5-CONTA ESTUDANTIL" + "\n" + "6-SAIR");
 							opcao = scan.nextInt();
+							while (ativo == true) {
 							saldoLoop = valorLoop + valor;
 							qtdTalaoLoop = qtdTalao + qtdTalaoLoop;
-							limiteLoop = limiteLoop - valor;
-							saldoPoupanca = saldoPoupanca + saldo;
+							valorLoop = valorLoop - valor;
+							}
 							validaContinua = menu.opcoes(opcao);
 							} 
 						break;

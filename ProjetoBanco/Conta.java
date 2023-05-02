@@ -11,20 +11,22 @@ public class Conta {
 	
 	Scanner input = new Scanner(System.in);
 	
-	public Conta(int numero, String cpf, double saldo, boolean ativo) {
+	public Conta(int numero, String cpf, double saldo, boolean ativo, int diaAniversarioPoupanca) {
 		this.numero = numero;
 		this.cpf = cpf;
 		this.saldo = saldo;
 		this.ativo = ativo;
+		this.diaAniversarioPoupanca=diaAniversarioPoupanca;
 	}
 	
+
 	
-	public int login(int diaAniversarioPoupanca) {
-		System.out.println("NUMERO DA CONTA: " + numero);
-		System.out.println("CPF: " + cpf);
-		System.out.println("DIA: " + diaAniversarioPoupanca);
+	public int login() {
+		System.out.println("NUMERO DA CONTA: " + this.numero);
+		System.out.println("CPF: " + this.cpf);
+		System.out.println("DIA: " + this.diaAniversarioPoupanca);
 		System.out.println("--------------------------------------------------------");
-		return diaAniversarioPoupanca;
+		return this.diaAniversarioPoupanca;
 	}
 
 		public int getNumero() {
@@ -109,7 +111,7 @@ public class Conta {
 					System.exit(0);
 				default:
 					if(opcao==2) {
-					validaCredito = false;
+					validaDebito = false;
 					} else {
 						System.out.println("OPÇÃO INVÁLIDA\n");
 					}
